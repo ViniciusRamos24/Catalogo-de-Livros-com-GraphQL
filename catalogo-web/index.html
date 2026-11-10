@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo de Livros</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <h1>Catálogo de Livros</h1>
+        <p>Gerenciamento de leituras</p>
+      </div>
+      <div class="header-actions">
+        <a href="http://127.0.0.1:8000/graphql" target="_blank" rel="noopener noreferrer">Abrir GraphQL</a>
+        <button type="button" class="primary-button" id="go-to-form">Novo livro</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="summary-section" aria-labelledby="stats-title">
+      <h2 id="stats-title">Resumo do catálogo</h2>
+      <div class="stats-grid" aria-live="polite">
+        <div class="stat-item"><span>Livros cadastrados</span><strong id="stat-total">—</strong></div>
+        <div class="stat-item"><span>Livros lidos</span><strong id="stat-finished">—</strong></div>
+        <div class="stat-item"><span>Média das avaliações</span><strong id="stat-rating">—</strong></div>
+        <div class="stat-item"><span>Total de páginas lidas</span><strong id="stat-pages">—</strong></div>
+      </div>
+    </section>
+
+    <div id="error-message" class="feedback error" role="alert" hidden></div>
+    <div id="success-message" class="feedback success" role="status" hidden></div>
+
+    <section class="catalog-section" aria-labelledby="catalog-title">
+      <div class="section-header">
+        <h2 id="catalog-title">Livros cadastrados</h2>
+        <span class="record-count" id="visible-count">—</span>
+      </div>
+      <div class="filters">
+        <label for="search-input">Pesquisar título
+          <input type="search" id="search-input" placeholder="Digite o título do livro" autocomplete="off">
+        </label>
+        <label for="status-filter">Filtrar por status
+          <select id="status-filter">
+            <option value="">Todos</option>
+            <option value="WANT_TO_READ">Quero ler</option>
+            <option value="READING">Lendo</option>
+            <option value="FINISHED">Lidos</option>
+          </select>
+        </label>
+      </div>
+      <div id="loading" class="feedback loading" role="status" hidden>Carregando livros...</div>
+      <div id="empty-state" class="empty-state" hidden>Nenhum livro encontrado para os filtros selecionados.</div>
+      <p class="scroll-hint">Role a tabela para o lado para ver todas as informações.</p>
+      <div class="table-container">
+        <table class="books-table">
+          <thead>
+            <tr>
+              <th scope="col">Livro / Autor</th>
+              <th scope="col">Ano</th>
+              <th scope="col">Páginas</th>
+              <th scope="col">Status</th>
+              <th scope="col">Avaliação</th>
+              <th scope="col">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="books-list" aria-live="polite"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="forms-section" id="book-form-section" aria-labelledby="forms-title">
+      <h2 id="forms-title">Cadastros</h2>
+      <div class="forms-grid">
+        <div class="form-panel">
+          <h3>Adicionar livro</h3>
+          <form id="book-form">
+            <label for="book-title">Título do livro</label>
+            <input id="book-title" name="title" type="text" maxlength="200" required placeholder="Título">
+            <div class="input-row">
+              <div>
+                <label for="book-year">Ano de publicação</label>
+                <input id="book-year" name="year" type="number" min="0" required placeholder="Ex.: 2000">
+              </div>
+              <div>
+                <label for="book-pages">Quantidade de páginas</label>
+                <input id="book-pages" name="pages" type="number" min="1" required placeholder="Ex.: 250">
+              </div>
+            </div>
+            <label for="book-author">Autor</label>
+            <select id="book-author" name="authorId" required><option value="">Carregando autores...</option></select>
+            <button class="primary-button form-submit" type="submit">Salvar livro</button>
+          </form>
+        </div>
+        <div class="form-panel">
+          <h3>Adicionar autor</h3>
+          <form id="author-form">
+            <label for="author-name">Nome do autor</label>
+            <input id="author-name" name="name" type="text" maxlength="200" required placeholder="Nome completo">
+            <label for="author-country">País (opcional)</label>
+            <input id="author-country" name="country" type="text" maxlength="100" placeholder="País de origem">
+            <button class="secondary-button form-submit" type="submit">Salvar autor</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">Exercício de GraphQL — Catálogo de Livros</footer>
+</body>
+</html>

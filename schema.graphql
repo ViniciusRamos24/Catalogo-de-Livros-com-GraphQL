@@ -1,0 +1,58 @@
+"""Situação de leitura de um livro."""
+enum ReadingStatus {
+  WANT_TO_READ
+  READING
+  FINISHED
+}
+
+type Author {
+  id: Int!
+  name: String!
+  country: String
+  books: [Book!]!
+  bookCount: Int!
+}
+
+type Book {
+  id: Int!
+  title: String!
+  year: Int!
+  pages: Int!
+  status: ReadingStatus!
+  rating: Int
+  author: Author!
+}
+
+type Stats {
+  totalBooks: Int!
+  finishedBooks: Int!
+  averageRating: Float
+  totalPagesRead: Int!
+}
+
+input AuthorInput {
+  name: String!
+  country: String
+}
+
+input BookInput {
+  title: String!
+  year: Int!
+  pages: Int!
+  authorId: Int!
+}
+
+type Query {
+  books(status: ReadingStatus, search: String): [Book!]!
+  book(id: Int!): Book
+  authors: [Author!]!
+  stats: Stats!
+}
+
+type Mutation {
+  addAuthor(input: AuthorInput!): Author!
+  addBook(input: BookInput!): Book!
+  updateBookStatus(id: Int!, status: ReadingStatus!): Book!
+  rateBook(id: Int!, rating: Int!): Book!
+  deleteBook(id: Int!): Boolean!
+}
